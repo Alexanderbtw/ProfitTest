@@ -1,7 +1,9 @@
-﻿namespace ProfitTest.Core.Interfaces.Export
+﻿using Microsoft.Extensions.FileProviders;
+
+namespace ProfitTest.Core.Interfaces.Export
 {
     public interface IExportable
     {
-        public void AcceptExport(IExporter exporter);
+        public Task<object> AcceptExport(IExporter exporter, CancellationToken cancellationToken = default);
     }
 }

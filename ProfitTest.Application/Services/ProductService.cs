@@ -1,11 +1,12 @@
-﻿using ProfitTest.Core.Interfaces.DAL;
+﻿using Microsoft.Extensions.FileProviders;
+using ProfitTest.Core.Interfaces.DAL;
 using ProfitTest.Core.Interfaces.Export;
 using ProfitTest.Core.Interfaces.Services;
 using ProfitTest.Core.Models;
 
 namespace ProfitTest.Application.Services
 {
-    public class ProductService : IProductService, IExportable
+    public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -60,9 +61,9 @@ namespace ProfitTest.Application.Services
             return res.Id;
         }
 
-        public void AcceptExport(IExporter exporter)
+        public async Task<object> AcceptExport(IExporter exporter, CancellationToken cancellationToken = default)
         {
-            exporter.ExportProducts(this);
+            return exporter.ExportProducts(await this.GetAllAsync(cancellationToken).ConfigureAwait(false));
         }
     }
 }

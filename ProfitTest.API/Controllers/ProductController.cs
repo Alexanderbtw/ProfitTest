@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ProfitTest.Application.Commands;
 using ProfitTest.Application.DTOs;
 using ProfitTest.Application.Queries;
-using ProfitTest.Core.Models;
 
 namespace ProfitTest.API.Controllers
 {
@@ -133,6 +132,23 @@ namespace ProfitTest.API.Controllers
         public async Task<IActionResult> FindFirstByTitle([FromQuery] string title, CancellationToken token)
         {
             return Ok(await _mediator.Send(new FindProductByTitleQuery(title), token).ConfigureAwait(false));
+        }
+
+        [HttpGet("Export")]
+        public async Task<IActionResult> ExportToExcel(CancellationToken token)
+        {
+            try
+            {
+                MemoryStream res = (MemoryStream)await _mediator.Send(new ExportProductsToExcelQuery(), token).ConfigureAwait(false);
+                res.Position = 0;
+                Response.Headers.Append("Content-Disposition", "attachment;filename=export_products.xlsx");
+
+                return File(res, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

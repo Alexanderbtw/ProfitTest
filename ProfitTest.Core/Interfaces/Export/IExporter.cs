@@ -1,9 +1,10 @@
-﻿using ProfitTest.Core.Interfaces.Services;
+﻿using Microsoft.Extensions.FileProviders;
+using ProfitTest.Core.Models;
 
 namespace ProfitTest.Core.Interfaces.Export
 {
     public interface IExporter
     {
-        void ExportProducts(IProductService productService);
+        object ExportProducts(IEnumerable<Product> products);
     }
 }

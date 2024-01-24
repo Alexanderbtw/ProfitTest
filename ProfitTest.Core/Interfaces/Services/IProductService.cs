@@ -1,8 +1,9 @@
-﻿using ProfitTest.Core.Models;
+﻿using ProfitTest.Core.Interfaces.Export;
+using ProfitTest.Core.Models;
 
 namespace ProfitTest.Core.Interfaces.Services
 {
-    public interface IProductService
+    public interface IProductService : IExportable
     {
         Task<Guid> AddAsync(Product product, CancellationToken cancellationToken = default);
         Task<IEnumerable<Product>> FindAllByPriceAsync(decimal price, CancellationToken cancellationToken = default);
