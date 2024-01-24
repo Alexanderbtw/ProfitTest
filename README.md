@@ -5,6 +5,7 @@
 ```
 docker-compose up
 ```
+4. Go to the */swagger* path
 
 # :mag_right: Run without Docker
 1. Download this proj
