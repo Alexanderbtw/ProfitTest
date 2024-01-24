@@ -1,9 +1,11 @@
-﻿using ProfitTest.Core.Interfaces;
+﻿using ProfitTest.Core.Interfaces.DAL;
+using ProfitTest.Core.Interfaces.Export;
+using ProfitTest.Core.Interfaces.Services;
 using ProfitTest.Core.Models;
 
 namespace ProfitTest.Application.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : IProductService, IExportable
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -56,6 +58,11 @@ namespace ProfitTest.Application.Services
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
             return res.Id;
+        }
+
+        public void AcceptExport(IExporter exporter)
+        {
+            exporter.ExportProducts(this);
         }
     }
 }

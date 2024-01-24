@@ -2,36 +2,32 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using ProfitTest.Application.Commands;
-using ProfitTest.Application.DTOs;
 using ProfitTest.Core.Interfaces.Services;
-using ProfitTest.Core.Models;
 
 namespace ProfitTest.Application.Handlers.CommandHandlers
 {
-    public class CreateProductHandler : IRequestHandler<CreateProductCommand, Guid>
+    public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        public CreateProductHandler(IProductService productService, IMapper mapper, ILogger<CreateProductHandler> logger)
+        public DeleteProductHandler(IProductService productService, IMapper mapper, ILogger<CreateProductHandler> logger)
         {
             _productService = productService;
             _mapper = mapper;
             _logger = logger;
         }
 
-        public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            Product product = _mapper.Map<Product>(request);
-
             try
             {
-                return await _productService.AddAsync(product, cancellationToken).ConfigureAwait(false);
+                return await _productService.RemoveAsync(request.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                return Guid.Empty;
+                return false;
             }
         }
     }

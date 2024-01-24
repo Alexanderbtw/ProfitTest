@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace ProfitTest.Core.Interfaces
+namespace ProfitTest.Core.Interfaces.DAL
 {
     public interface IGenericRepository<T>
         where T : class

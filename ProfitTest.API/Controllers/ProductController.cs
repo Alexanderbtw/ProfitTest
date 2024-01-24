@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using ProfitTest.Application.Commands;
 using ProfitTest.Application.DTOs;
 using ProfitTest.Application.Queries;
+using ProfitTest.Core.Models;
 
 namespace ProfitTest.API.Controllers
 {
@@ -20,14 +21,14 @@ namespace ProfitTest.API.Controllers
 
         [HttpGet("GetAll")]
         [ProducesDefaultResponseType(typeof(List<ProductResponseDTO>))]
-        public async Task<IActionResult> GetAllProducts(CancellationToken token)
+        public async Task<IActionResult> GetAll(CancellationToken token)
         {
             return Ok(await _mediator.Send(new GetProductsQuery(), token).ConfigureAwait(false));
         }
 
         [HttpGet("{productId}")]
         [ProducesDefaultResponseType(typeof(ProductResponseDTO))]
-        public async Task<IActionResult> GetProduct([FromRoute] Guid productId, CancellationToken token)
+        public async Task<IActionResult> Get([FromRoute] Guid productId, CancellationToken token)
         {
             var result = await _mediator.Send(new GetProductQuery(productId), token).ConfigureAwait(false);
 
@@ -40,7 +41,7 @@ namespace ProfitTest.API.Controllers
 
         [HttpPost("Create")]
         [ProducesDefaultResponseType(typeof(ModifyProductResponseDTO))]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand product, CancellationToken token)
+        public async Task<IActionResult> Create([FromBody] CreateProductCommand product, CancellationToken token)
         {
             ModifyProductResponseDTO response = new();
 
@@ -48,11 +49,11 @@ namespace ProfitTest.API.Controllers
             {
                 response.Errors = new(
                     ModelState
-                        .Where(item => item.Value.ValidationState == ModelValidationState.Invalid)
+                        .Where(item => item.Value?.ValidationState == ModelValidationState.Invalid)
                         .Select(item =>
                         (
                             item.Key,
-                            item.Value.Errors.Select(err => err.ErrorMessage).ToList()
+                            item.Value!.Errors.Select(err => err.ErrorMessage).ToList()
                         ))
                         .ToDictionary()
                 );
@@ -75,6 +76,63 @@ namespace ProfitTest.API.Controllers
                 return BadRequest();
             }
             return Ok(response);
+        }
+
+        [HttpPut("Update")]
+        [ProducesDefaultResponseType(typeof(ModifyProductResponseDTO))]
+        public async Task<IActionResult> Update([FromBody] UpdateProductCommand product, CancellationToken token)
+        {
+            ModifyProductResponseDTO response = new();
+
+            if (!ModelState.IsValid)
+            {
+                response.Errors = new(
+                    ModelState
+                        .Where(item => item.Value?.ValidationState == ModelValidationState.Invalid)
+                        .Select(item =>
+                        (
+                            item.Key,
+                            item.Value!.Errors.Select(err => err.ErrorMessage).ToList()
+                        ))
+                        .ToDictionary()
+                );
+
+                return BadRequest(response);
+            }
+
+            response.ProductId = await _mediator.Send(product, token).ConfigureAwait(false);
+
+            if (response.ProductId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+            return Ok(response);
+        }
+
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid productId, CancellationToken token)
+        {
+            var res = _mediator.Send(new DeleteProductCommand(productId), token).ConfigureAwait(false);
+
+            if (await res)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        [HttpGet("FindAll")]
+        [ProducesDefaultResponseType(typeof(List<ProductResponseDTO>))]
+        public async Task<IActionResult> FindAllByTitle([FromQuery] string title, CancellationToken token)
+        {
+            return Ok(await _mediator.Send(new FindProductsByTitleQuery(title), token).ConfigureAwait(false));
+        }
+
+        [HttpGet("Find")]
+        [ProducesDefaultResponseType(typeof(ProductResponseDTO))]
+        public async Task<IActionResult> FindFirstByTitle([FromQuery] string title, CancellationToken token)
+        {
+            return Ok(await _mediator.Send(new FindProductByTitleQuery(title), token).ConfigureAwait(false));
         }
     }
 }

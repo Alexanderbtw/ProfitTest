@@ -1,0 +1,28 @@
+version: '3.9'
+
+networks:
+  profit-net:
+     driver: bridge
+
+services:
+  profittest.api:
+    container_name: api
+    image: borntowhine/profittest_api
+    build:
+      context: .
+      dockerfile: ProfitTest.API/Dockerfile
+    networks:
+      - profit-net
+    depends_on:
+      - db
+  
+  db:
+    container_name: db
+    image: postgres:16.0-alpine3.18
+    volumes:
+      - ./profit-data:/var/lib/postgresql/data
+    networks:
+      - profit-net
+
+volumes:
+  profit-data:

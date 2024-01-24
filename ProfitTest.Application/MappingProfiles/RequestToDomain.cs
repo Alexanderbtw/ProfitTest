@@ -9,6 +9,7 @@ namespace ProfitTest.Application.MappingProfiles
         public RequestToDomain()
         {
             CreateMap<CreateProductCommand, Product>();
+            CreateMap<UpdateProductCommand, Product>();
         }
     }
 }

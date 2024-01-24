@@ -1,5 +1,5 @@
 ﻿using OrderDelivery.DAL.Repositories;
-using ProfitTest.Core.Interfaces;
+using ProfitTest.Core.Interfaces.DAL;
 using ProfitTest.Core.Models;
 
 namespace ProfitTest.DAL.Repositories

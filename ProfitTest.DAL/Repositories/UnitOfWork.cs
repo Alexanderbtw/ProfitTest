@@ -1,4 +1,4 @@
-﻿using ProfitTest.Core.Interfaces;
+﻿using ProfitTest.Core.Interfaces.DAL;
 
 namespace ProfitTest.DAL.Repositories
 {
@@ -24,6 +24,11 @@ namespace ProfitTest.DAL.Repositories
         {
             _context.Dispose();
             GC.SuppressFinalize(this);
+        }
+
+        ~UnitOfWork()
+        {
+            Dispose();
         }
     }
 }

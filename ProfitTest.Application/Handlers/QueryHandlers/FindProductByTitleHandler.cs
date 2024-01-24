@@ -6,20 +6,19 @@ using ProfitTest.Core.Interfaces.Services;
 
 namespace ProfitTest.Application.Handlers.QueryHandlers
 {
-    public class GetProductHandler : IRequestHandler<GetProductQuery, ProductResponseDTO>
+    public class FindProductByTitleHandler : IRequestHandler<FindProductByTitleQuery, ProductResponseDTO>
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
-        public GetProductHandler(IProductService productService, IMapper mapper)
+
+        public FindProductByTitleHandler(IProductService productService, IMapper mapper)
         {
             _productService = productService;
             _mapper = mapper;
         }
-
-        public async Task<ProductResponseDTO> Handle(GetProductQuery request, CancellationToken cancellationToken)
+        public async Task<ProductResponseDTO> Handle(FindProductByTitleQuery request, CancellationToken cancellationToken)
         {
-            var product = await _productService.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
-
+            var product = await _productService.FindFirstByTitleAsync(request.Title, cancellationToken).ConfigureAwait(false);
             return _mapper.Map<ProductResponseDTO>(product);
         }
     }

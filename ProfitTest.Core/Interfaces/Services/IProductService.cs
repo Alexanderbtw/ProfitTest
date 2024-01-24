@@ -1,6 +1,6 @@
 ﻿using ProfitTest.Core.Models;
 
-namespace ProfitTest.Core.Interfaces
+namespace ProfitTest.Core.Interfaces.Services
 {
     public interface IProductService
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProfitTest.Core.Interfaces;
+using ProfitTest.Core.Interfaces.DAL;
 using System.Linq.Expressions;
 
 namespace OrderDelivery.DAL.Repositories

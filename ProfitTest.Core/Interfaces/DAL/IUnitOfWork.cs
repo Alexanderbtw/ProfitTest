@@ -1,4 +1,4 @@
-﻿namespace ProfitTest.Core.Interfaces
+﻿namespace ProfitTest.Core.Interfaces.DAL
 {
     public interface IUnitOfWork
     {

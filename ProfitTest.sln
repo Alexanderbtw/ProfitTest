@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitTest.API", "ProfitTest.API\ProfitTest.API.csproj", "{04D8872B-198F-414A-85FA-7B6281F6FA9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitTest.API", "ProfitTest.API\ProfitTest.API.csproj", "{04D8872B-198F-414A-85FA-7B6281F6FA9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitTest.DAL", "ProfitTest.DAL\ProfitTest.DAL.csproj", "{1F793244-3E88-4E4A-9D31-1D92DE8DB854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitTest.DAL", "ProfitTest.DAL\ProfitTest.DAL.csproj", "{1F793244-3E88-4E4A-9D31-1D92DE8DB854}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitTest.Core", "ProfitTest.Core\ProfitTest.Core.csproj", "{73DC435B-F4CE-4B02-9E7D-BB1E152E2F4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitTest.Core", "ProfitTest.Core\ProfitTest.Core.csproj", "{73DC435B-F4CE-4B02-9E7D-BB1E152E2F4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitTest.Application", "ProfitTest.Application\ProfitTest.Application.csproj", "{4E350E37-8D59-4924-B2BC-ABAD494DEBF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitTest.Application", "ProfitTest.Application\ProfitTest.Application.csproj", "{4E350E37-8D59-4924-B2BC-ABAD494DEBF1}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3F35D988-16DD-42E8-88B7-2AEF6669E30C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4E350E37-8D59-4924-B2BC-ABAD494DEBF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E350E37-8D59-4924-B2BC-ABAD494DEBF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E350E37-8D59-4924-B2BC-ABAD494DEBF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F35D988-16DD-42E8-88B7-2AEF6669E30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F35D988-16DD-42E8-88B7-2AEF6669E30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F35D988-16DD-42E8-88B7-2AEF6669E30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F35D988-16DD-42E8-88B7-2AEF6669E30C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

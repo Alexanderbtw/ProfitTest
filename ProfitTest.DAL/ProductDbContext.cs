@@ -8,6 +8,8 @@ namespace ProfitTest.DAL
     {
         public DbSet<Product> Products { get; set; }
 
+        public ProductDbContext() { }
+
         public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
         {
             Database.Migrate();
