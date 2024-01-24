@@ -1,0 +1,44 @@
+version: '3.9'
+
+networks:
+  profit-net:
+     driver: bridge
+
+services:
+  profittest.api:
+    container_name: api
+    image: borntowhine/profittest_api
+    networks:
+      - profit-net
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - DB_DATABASE=productsprofit
+      - DB_USERNAME=ps_user
+      - DB_PASSWORD=ps_pass
+      - DB_HOST=db
+      - DB_PORT=5432
+    ports:
+      - 8080:8080
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  db:
+    container_name: db
+    image: postgres:16.0-alpine3.18
+    volumes:
+      - ./profit-data:/var/lib/postgresql/data
+    networks:
+      - profit-net
+    environment:
+      - POSTGRES_USER=ps_user
+      - POSTGRES_PASSWORD=ps_pass
+      - POSTGRES_DB=productsprofit
+    ports:
+      - 5432:5432
+
+volumes:
+  profit-data:
